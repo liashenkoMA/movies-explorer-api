@@ -1,2 +1,2 @@
 # movies-explorer-api
-Backend
+Домен бэкенда: api.moviesmak.nomoredomainsrocks.ru
