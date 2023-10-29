@@ -19,7 +19,10 @@ mongoose.connect(DB_URL, {
 }).then(() => {
   console.log('Connected to MongoDB');
 });
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: 'https://moviesmak.nomoredomainsrocks.ru',
+}));
 app.use(helmet());
 app.use(cookieParser());
 app.use(express.json());

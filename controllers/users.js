@@ -26,7 +26,7 @@ module.exports.patchMe = (req, res, next) => {
 
   return User.findByIdAndUpdate(req.user._id, { email, name }, { new: true, runValidators: true })
     .orFail(new NotFoundError('Пользователь не найден'))
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send({ name: user.name, email: user.email }))
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
         next(new BadRequest('Неправильный ID'));
