@@ -21,7 +21,7 @@ mongoose.connect(DB_URL, {
 });
 app.use(cors({
   credentials: true,
-  origin: 'https://moviesmak.nomoredomainsrocks.ru',
+  origin: 'http://localhost:3001',
 }));
 app.use(helmet());
 app.use(cookieParser());
