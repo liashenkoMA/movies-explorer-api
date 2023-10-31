@@ -45,9 +45,19 @@ module.exports.signup = (req, res, next) => {
     .then((hash) => User.create({
       name, email, password: hash,
     }))
-    .then((user) => res.status(201).send({
-      name: user.name, email,
-    }))
+    .then((user) => {
+      const token = jwt.sign(
+        { _id: user._id },
+        JWT_SECRET,
+        {
+          expiresIn: '7d',
+        },
+      );
+
+      res.status(201).send({
+        _id: user._id, name: user.name, email, token,
+      });
+    })
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequest('Ошибка данных'));
@@ -71,11 +81,6 @@ module.exports.signin = (req, res, next) => {
           expiresIn: '7d',
         },
       );
-
-      res.cookie('jwt', token, {
-        maxAge: 3600000,
-        httpOnly: true,
-      });
 
       res.send({
         _id: user._id, name: user.name, email, token,

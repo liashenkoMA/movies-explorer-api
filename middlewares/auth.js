@@ -5,7 +5,8 @@ const UnauthorizedErr = require('../errors/UnauthorizedErr');
 const { JWT_SECRET = 'hellow-worlds' } = process.env;
 
 module.exports = (req, res, next) => {
-  const token = req.cookies.jwt;
+  const { authorization } = req.headers;
+  const token = authorization.replace('Bearer ', '');
 
   if (!token) {
     return next(new UnauthorizedErr('Необходима авторизация'));
